@@ -45,7 +45,13 @@ import org.springframework.samples.petclinic.model.Person;
 @Table(name = "vets")
 public class Vet extends Person implements Serializable {
 
-    /**
+    @Override
+	public String toString() {
+		return "Vet [specialties=" + specialties + ", firstName=" + firstName + ", lastName=" + lastName + ", id=" + id
+				+ "]";
+	}
+
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;

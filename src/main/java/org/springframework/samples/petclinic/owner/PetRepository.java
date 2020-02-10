@@ -15,10 +15,14 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.samples.petclinic.vet.Vet;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -30,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Sam Brannen
  * @author Michael Isvy
  */
-public interface PetRepository extends Repository<Pet, Integer> {
+public interface PetRepository extends JpaRepository<Pet, Integer> {
 
     /**
      * Retrieve all {@link PetType}s from the data store.
@@ -48,11 +52,15 @@ public interface PetRepository extends Repository<Pet, Integer> {
     @Transactional(readOnly = true)
     Pet findById(Integer id);
 
-    /**
-     * Save a {@link Pet} to the data store, either inserting or updating it.
-     * @param pet the {@link Pet} to save
-     */
-    void save(Pet pet);
+//    /**
+//     * Save a {@link Pet} to the data store, either inserting or updating it.
+//     * @param pet the {@link Pet} to save
+//     */
+//    void save(Pet pet);
+//    
+//    @Query("select distinct p from Pet p where YEAR(p.birth_date)=:?1 order by p.birth_date ASC")
+//	List<Pet> findByDate(int year);
+//    List<Pet> findByName(String Name);
 
 }
 

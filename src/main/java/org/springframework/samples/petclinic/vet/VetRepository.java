@@ -16,10 +16,14 @@
 package org.springframework.samples.petclinic.vet;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -31,16 +35,21 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Sam Brannen
  * @author Michael Isvy
  */
-public interface VetRepository extends Repository<Vet, Integer> {
+public interface VetRepository extends JpaRepository<Vet, Integer> {
 
     /**
      * Retrieve all <code>Vet</code>s from the data store.
      *
      * @return a <code>Collection</code> of <code>Vet</code>s
      */
-    @Transactional(readOnly = true)
-    @Cacheable("vets")
-    Collection<Vet> findAll() throws DataAccessException;
-
-
+//    @Transactional(readOnly = true)
+//    @Cacheable("vets")
+//    Collection<Vet> findAll() throws DataAccessException;
+//
+	List<Vet> findByLastName(String lastName);
+	List<Vet> findByFirstNameAndLastName(String firstName, String lastName);
+	List<Vet> findByFirstNameOrLastName(String firstName, String lastName);
+	
+	@Query("select distinct v from Vet v join fetch v.specialties s where s.name=:name")
+	List<Vet> findBySpecialityName(@Param("name") String name);
 }
